@@ -60,8 +60,10 @@ module.exports = (grunt)->
       return
     )
 
-    childProcess.stdout.on 'data', stdoutHandler
-    childProcess.stderr.on 'data', stderrHandler
+    childProcess.stdout.on 'data', (chunk) ->
+      stdoutHandler.call @,chunk,taskDone
+    childProcess.stderr.on 'data', (chunk) ->
+      stderrHandler.call @,chunk,taskDone
 
     return
 
